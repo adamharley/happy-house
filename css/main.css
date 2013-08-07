@@ -1,0 +1,66 @@
+/* Page */
+
+#logo {
+	background-image: url("../images/member_143.png");
+	width: 35px;
+	height: 33px;
+	display: inline-block;
+	margin-bottom: -2px;
+}
+
+@media (max-height: 375px) {
+	.btn {
+		display: none;
+	}
+}
+
+#stage {
+	top: 50%;
+	left: 50%;
+/*	margin-top: -77.5px;
+*/	margin-left: -136px;
+	box-shadow: 0px 0px 5px 2px;
+		-webkit-box-shadow: 0px 0px 5px 2px;
+}
+
+
+/* Happy House */
+
+.channel {
+	position: absolute;
+}
+
+#stage {
+	width: 272px;
+	height: 155px;
+	position: absolute;
+	overflow: hidden;
+	background-color: #000;
+}
+
+
+/* Debug */
+
+#debug {
+	border: 1px dotted;
+	display: none;
+	padding: 0 10px 20px 10px;
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+}
+
+@media (max-height: 750px) {
+	#debug-toggle {
+		display: none;
+	}
+}
+
+#frame-counter:before {
+	content: "Current frame: ";
+	font-weight: bold;
+}
+
+#frame-counter {
+	font-size: 1.5em;
+}
