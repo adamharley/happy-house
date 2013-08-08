@@ -413,6 +413,12 @@ $(document).ready(function() {
 	};
 	
 	
+	/* Mute control */
+	$("#mute-toggle").click(function(){
+		createjs.Sound.setMute(!createjs.Sound.getMute());
+	});
+	
+	
 	/* Preload */
 	var queue = new createjs.LoadQueue();
 	queue.installPlugin(createjs.Sound);
