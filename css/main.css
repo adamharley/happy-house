@@ -50,12 +50,6 @@
 	bottom: 20px;
 }
 
-@media (max-height: 750px) {
-	#debug-toggle {
-		display: none;
-	}
-}
-
 #frame-counter:before {
 	content: "Current frame: ";
 	font-weight: bold;

@@ -408,9 +408,9 @@ $(document).ready(function() {
 		loadScene($(this).val());
 	});
 	
-	$("#debug-toggle").click(function(){
-		$("#debug").toggle();
-	});
+	if (window.location.hash == '#debug') {
+		$("#debug").show();
+	};
 	
 	
 	/* Preload */
