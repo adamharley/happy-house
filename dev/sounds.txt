@@ -1,0 +1,55 @@
+25-44 Sr-open2
+54-73 Sr-open2
+83-102 Sr-open2
+106-110 end1
+113-131 430 (missing)
+133-136 R-clickB
+138-141 R-clickA
+144-152 Sr-twkl2 LOOP
+356-360 Sr-kasa1
+417-422 Sr-kasa1
+495-496 Sr-pechi
+499-500 Sr-pechi
+504-505 Sr-pechi
+519-530 R-bite3 LOOP
+548-556 R-pyuu1 LOOP
+604-606 Sr-chaha1
+644-650 Sr-pararaH LOOP
+651-651 B
+654-660 Sr-parara2 LOOP
+661-661 B
+690-696 Sr-parara2 LOOP
+697-697 B
+709-716 Sr-pararaH LOOP
+717-717 B
+724-726 Sr-parara1H
+728-730 Sr-parara1H
+732-734 Sr-parara1H
+742-751 Sr-pararaH LOOP
+752-752 B
+758-768 Sr-parara2 LOOP
+769-769 B
+790-807 Sr-baran1
+819-836 Sr-baran1
+840-845 Sr-kasa1
+849-866 Sr-baran1
+916-924 Sr-kasa1
+951-967 R-bite3 LOOP
+968-968 B
+995-1003 Sr-kasa1
+1058-1067 Sr-run1 LOOP
+1068-1068 B
+1082-1093 Sr-kasa1
+1129-1137 Sr-kasa1
+1152-1178 R-bite3 LOOP
+1210-1218 Sr-kasa1
+1235-1258 R-bite3 LOOP
+1284-1292 Sr-kasa1
+1309-1333 R-bite3 LOOP
+1359-1367 Sr-kasa1
+1384-1411 R-bite3 LOOP
+1445-1453 R-kasa
+1455-1463 R-kasa
+1529-1536 R-kasa
+1538-1546 R-kasa
+1599-1605 Sr-fall
