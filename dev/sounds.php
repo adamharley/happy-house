@@ -11,7 +11,7 @@ foreach ( $data as $line ) {
 	$sound = trim( $lineArr[1] );
 	$loop = isset( $lineArr[2] );
 	
-	if ( '430' == $sound )
+	if ( '430' == $sound || 'B' == $sound )
 		continue;
 	
 	$r[ $start ] = $loop ? array( $sound, $end ) : array( $sound );
