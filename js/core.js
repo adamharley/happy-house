@@ -7,7 +7,7 @@ function tick() {
 	}
 	
 	currentFrame += 1;
-	loadFrame(currentFrame);
+	loadImageFrame(currentFrame);
 	$("#frame-counter").html(currentFrame)
 }
 
@@ -230,12 +230,12 @@ function checkEvent(n) {
 }
 
 
-function loadFrame(n) {
+function loadImageFrame(n) {
 	if ( checkEvent(n-1) ) {
 		return;
 	}
 	
-	var frame = data.frames[n-1];
+	var frame = data.imageFrames[n-1];
 	
 	$(".channel").removeClass("updated");
 	
@@ -245,7 +245,6 @@ function loadFrame(n) {
 		if ( $("#channel-"+channel).length == 0 ) {
 			$("#stage").append($("<div id='channel-"+channel+"' class='channel' style='z-index: "+channel+";'></div>"));
 		} else {
-			// TODO: Clear onClick events
 			$("#channel-"+channel)
 				.off("click");
 		}
@@ -358,7 +357,7 @@ function loadScene(n) {
 		console.log("Scene "+n+": Loaded");
 		
 		currentFrame = data.scenes[n];
-		loadFrame(currentFrame);
+		loadImageFrame(currentFrame);
 		interval = setInterval(tick,200);
 	}
 }
