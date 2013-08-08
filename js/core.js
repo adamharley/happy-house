@@ -1,4 +1,5 @@
 var interval;
+var soundTimeout;
 
 
 function tick() {
@@ -8,6 +9,7 @@ function tick() {
 	
 	currentFrame += 1;
 	loadImageFrame(currentFrame);
+	loadSoundFrame(currentFrame);
 	$("#frame-counter").html(currentFrame)
 }
 
@@ -230,6 +232,34 @@ function checkEvent(n) {
 }
 
 
+function loadSoundFrame(n) {
+	var frame = data.soundFrames[n];
+	
+	if (typeof frame == "undefined") {
+		return;
+	}
+	
+	console.log("Frame "+n+": Playing sound "+frame[0]);
+	
+	if (typeof frame[1] == "undefined") {
+		createjs.Sound.play(frame[0], createjs.Sound.INTERRUPT_ANY);
+	} else { // Looped
+		if (frame[0] == 'Sr-twkl2') { // Offset to avoid popping noise
+			var sound = createjs.Sound.play(frame[0], createjs.Sound.INTERRUPT_ANY, 4, 4, -1);
+		} else {
+			var sound = createjs.Sound.play(frame[0], createjs.Sound.INTERRUPT_ANY, 0, 0, -1);
+		}
+		
+		var duration = frame[1] - n;
+		soundTimeout = setTimeout(function() {
+			console.log( "Frame "+frame[1]+": " + ( sound.stop() ? "Stopped sound" : "Did not stop sound" ) + " " + frame[0] );
+		}, duration * 200);
+		
+		console.log("Frame "+n+": Looping sound for "+duration+" frames");
+	}
+}
+
+
 function loadImageFrame(n) {
 	if ( checkEvent(n-1) ) {
 		return;
@@ -350,6 +380,8 @@ function loadImageFrame(n) {
 
 function loadScene(n) {
 	clearInterval(interval);
+	clearTimeout(soundTimeout);
+	createjs.Sound.stop();
 	
 	if (typeof data.scenes[n] == "undefined") {
 		console.log("Scene "+n+": Not found");
@@ -358,6 +390,7 @@ function loadScene(n) {
 		
 		currentFrame = data.scenes[n];
 		loadImageFrame(currentFrame);
+		loadSoundFrame(currentFrame);
 		interval = setInterval(tick,200);
 	}
 }
@@ -365,7 +398,6 @@ function loadScene(n) {
 
 $(document).ready(function() {
 	/* Debug */
-	
 	$.each(data.scenes, function(key, value) {   
 		 $('#scene-select select')
 			  .append($('<option>', { value : key })
@@ -381,11 +413,21 @@ $(document).ready(function() {
 	});
 	
 	
+	/* Preload */
+	var queue = new createjs.LoadQueue();
+	queue.installPlugin(createjs.Sound);
+	
 	$.each(data.images, function(key){
 		if (jQuery.inArray(key,[50,60,65,76,79,87,110,115,120,127,132,142,149,181,206,207,208,209,210,216,217]) !== -1) {
-			$("<img/>")[0].src = "images/member_"+key+".png";
+			queue.loadFile({src:"images/member_"+key+".png"});
 		}
 	});
 	
+	$.each(data.sounds, function(key,value){
+		queue.loadFile({"id":value, "src":"sounds/"+value+".wav"});
+	});
+	
+	
+	/* Load first scene */
 	loadScene("start0");
 });
