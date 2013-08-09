@@ -2,6 +2,16 @@ var interval;
 var soundTimeout;
 
 
+function getRand(n) {
+	return Math.floor((Math.random()*n)+1);
+}
+
+
+function getRandMatch(n) {
+	return Math.floor((Math.random()*n)+1) == n;
+}
+
+
 function tick() {
 	if (typeof currentFrame == 'undefined') {
 		currentFrame = 0;
@@ -17,28 +27,28 @@ function tick() {
 function checkEvent(n) {
 	switch (n) {
 		case 14: // start0
-			if (Math.floor((Math.random()*10)+1) == 10) {
+			if (getRandMatch(10)) {
 				loadScene("hello2");
 			} else {
 				loadScene("start0");
 			}
 			break;
 		case 44: // s1
-			if (Math.floor((Math.random()*15)+1) == 15) {
+			if (getRandMatch(15)) {
 				loadScene("go");
 			} else {
 				loadScene("sitA");
 			}
 			break;
 		case 73: // s2
-			if (Math.floor((Math.random()*15)+1) == 15) {
+			if (getRandMatch(15)) {
 				loadScene("sB2A");
 			} else {
 				loadScene("sitB");
 			}
 			break;
 		case 102: // s3
-			if (Math.floor((Math.random()*15)+1) == 15) {
+			if (getRandMatch(15)) {
 				loadScene("gloomA");
 			} else {
 				loadScene("sleepA");
@@ -66,7 +76,7 @@ function checkEvent(n) {
 		case 161: // st_dmy
 			break;
 		case 177: // sitA
-			switch (Math.floor((Math.random()*15)+1)) {
+			switch (getRand(15)) {
 				case 5:
 					loadScene("sitC");
 					break;
@@ -84,9 +94,9 @@ function checkEvent(n) {
 			loadScene("sitA");
 			break;
 		case 220: // sitB
-			switch (Math.floor((Math.random()*15)+1)) {
+			switch (getRand(15)) {
 				case 5:
-					loadScene("lunch"+Math.floor((Math.random()*3)+1));
+					loadScene("lunch"+getRand(3));
 					break;
 				case 10:
 					loadScene("sB2A");
@@ -96,7 +106,7 @@ function checkEvent(n) {
 			}
 			break;
 		case 233: // sitC
-			switch (Math.floor((Math.random()*25)+1)) {
+			switch (getRand(25)) {
 				case 5:
 					loadScene("nobiA");
 					break;
@@ -114,12 +124,12 @@ function checkEvent(n) {
 			}
 			break;
 		case 245: // walkA
-			if (Math.floor((Math.random()*15)+1) == 15) {
+			if (getRandMatch(15)) {
 				loadScene("gloomB");
 			}
 			break;
 		case 311: // w-4
-			if (Math.floor((Math.random()*15)+1) == 15) {
+			if (getRandMatch(15)) {
 				loadScene("return");
 			}
 			break;
@@ -130,14 +140,14 @@ function checkEvent(n) {
 			loadScene("g-1");
 			break;
 		case 376: // g-1
-			if (Math.floor((Math.random()*15)+1) == 15) {
+			if (getRandMatch(15)) {
 				loadScene("gloomB");
 			} else {
 				loadScene("w-1");
 			}
 			break;
 		case 403: // nobiA
-			if (Math.floor((Math.random()*15)+1) == 15) {
+			if (getRandMatch(15)) {
 				loadScene("gloomB");
 			} else {
 				loadScene("g-1");
@@ -147,21 +157,21 @@ function checkEvent(n) {
 			loadScene("sitA");
 			break;
 		case 442: // look
-			if (Math.floor((Math.random()*15)+1) == 15) {
+			if (getRandMatch(15)) {
 				loadScene("sB2A");
 			} else {
 				loadScene("sitB");
 			}
 			break;
 		case 544: // lunch
-			if (Math.floor((Math.random()*15)+1) == 15) {
+			if (getRandMatch(15)) {
 				loadScene("sB2A");
 			} else {
 				loadScene("sitB");
 			}
 			break;	
 		case 555: // sleepA
-			switch (Math.floor((Math.random()*15)+1)) {
+			switch (getRand(15)) {
 				case 5:
 					loadScene("akubi");
 					break;
@@ -191,28 +201,28 @@ function checkEvent(n) {
 			loadScene("eatA");
 			break;
 		case 1189: // eatA
-			if (Math.floor((Math.random()*15)+1) == 15) {
+			if (getRandMatch(15)) {
 				loadScene("sB2A");
 			} else {
 				loadScene("sitB");
 			}
 			break;
 		case 1269: // lunch1
-			if (Math.floor((Math.random()*15)+1) == 15) {
+			if (getRandMatch(15)) {
 				loadScene("sB2A");
 			} else {
 				loadScene("sitB");
 			}
 			break;
 		case 1343: // lunch2
-			if (Math.floor((Math.random()*15)+1) == 15) {
+			if (getRandMatch(15)) {
 				loadScene("sB2A");
 			} else {
 				loadScene("sitB");
 			}
 			break;
 		case 1422: // lunch3
-			if (Math.floor((Math.random()*15)+1) == 15) {
+			if (getRandMatch(15)) {
 				loadScene("sB2A");
 			} else {
 				loadScene("sitB");
@@ -349,7 +359,7 @@ function loadImageFrame(n) {
 				case 118: // Sleeping hamster
 					$("#channel-"+channel)
 						.on("click",function(){
-							if (Math.floor((Math.random()*15)+1) == 15) {
+							if (getRandMatch(15)) {
 								loadScene("gloomA");
 							} else {
 								loadScene("akubi");
