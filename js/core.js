@@ -8,7 +8,7 @@ function getRand(n) {
 
 
 function getRandMatch(n) {
-	return Math.floor((Math.random()*n)+1) == n;
+	return getRand(n) == n;
 }
 
 
@@ -21,6 +21,164 @@ function tick() {
 	loadImageFrame(currentFrame);
 	loadSoundFrame(currentFrame);
 	$("#frame-counter").html(currentFrame)
+}
+
+
+function loadSoundFrame(n) {
+	var frame = data.soundFrames[n];
+	
+	if (typeof frame == "undefined") {
+		return;
+	}
+	
+	console.log("Frame "+n+": Playing sound "+frame[0]);
+	
+	if (typeof frame[1] == "undefined") {
+		createjs.Sound.play(frame[0], createjs.Sound.INTERRUPT_ANY);
+	} else { // Looped
+		if (frame[0] == 'Sr-twkl2') { // Offset to avoid popping noise
+			var sound = createjs.Sound.play(frame[0], createjs.Sound.INTERRUPT_ANY, 4, 4, -1);
+		} else {
+			var sound = createjs.Sound.play(frame[0], createjs.Sound.INTERRUPT_ANY, 0, 0, -1);
+		}
+		
+		var duration = frame[1] - n;
+		soundTimeout = setTimeout(function() {
+			console.log( "Frame "+frame[1]+": " + ( sound.stop() ? "Stopped sound" : "Did not stop sound" ) + " " + frame[0] );
+		}, duration * 200);
+		
+		console.log("Frame "+n+": Looping sound for "+duration+" frames");
+	}
+}
+
+
+function loadImageFrame(n) {
+	if ( checkEvent(n-1) ) {
+		return;
+	}
+	
+	var frame = data.imageFrames[n-1];
+	
+	$(".channel").hide();
+	
+	$.each(frame, function(channel, sprite) {
+		var imageName = sprite[0];
+		var image = data.images[imageName];
+		
+		if ( $("#channel-"+channel).length == 0 ) {
+			$("#stage").append($("<div id='channel-"+channel+"' class='channel' style='z-index: "+channel+";'></div>"));
+		} else {
+			$("#channel-"+channel)
+				.off("click");
+		}
+		
+		if (typeof image == 'undefined') {
+			switch(imageName) {
+				case 288: // Quit button
+					$("#channel-"+channel)
+						.css({
+							"background-image": "none",
+							"left": sprite[1],
+							"top": sprite[2],
+							"width": 52,
+							"height": 22
+						})
+						.show()
+						.on("click",function(){
+							loadScene("end1A");
+						});
+					break;
+				case 289: // Basket button? (found in start0, end1 and hello2)
+					break;
+				case 290: // Open button
+					$("#channel-"+channel)
+						.css({
+							"background-image": "none",
+							"left": sprite[1],
+							"top": sprite[2],
+							"width": 52,
+							"height": 22
+						})
+						.show()
+						.on("click",function(){
+							loadScene("end1B");
+						});
+					break;
+				case 291: // Black background
+					break;
+				default:
+					console.log("Frame "+n+": Could not find cast member "+imageName);
+			}
+		} else {
+			switch (imageName) {
+				case 12: // Basket top
+					$("#channel-"+channel)
+						.on("click",function(){
+							loadScene("hello1");
+						});
+					break;
+				case 14: // Basket full
+					$("#channel-"+channel)
+						.on("click",function(){
+							loadScene("s"+getRand(3));
+						});
+					break;
+				case 18: // Bowl
+				case 19:
+					$("#channel-"+channel)
+						.on("click",function(){
+							if ( currentFrame >= data.scenes.sitA && currentFrame < data.scenes.sB2A || currentFrame >= data.scenes.sleepA && currentFrame < data.scenes.akubi ) {
+								loadScene("food1");
+							} else if ( currentFrame >= data.scenes.sitB && currentFrame < data.scenes.sitC ) {
+								loadScene("food2");
+							} else if ( currentFrame >= data.scenes.sitC && currentFrame < data.scenes.walkA ) {
+								loadScene("food3");
+							}
+						});
+					break;
+				case 118: // Sleeping hamster
+					$("#channel-"+channel)
+						.on("click",function(){
+							if (getRandMatch(15)) {
+								loadScene("gloomA");
+							} else {
+								loadScene("akubi");
+							}
+						});
+					break;
+			}
+			
+			$("#channel-"+channel)
+				.css({
+					"background-image": "url('images/member_"+imageName+".png')",
+					"left": sprite[1],
+					"top": sprite[2],
+					"width": image[0],
+					"height": image[1]
+				})
+				.show();
+		}
+	});
+	
+//	console.log("Frame "+n+": Loaded");
+}
+
+
+function loadScene(n) {
+	clearInterval(interval);
+	clearTimeout(soundTimeout);
+	createjs.Sound.stop();
+	
+	if (typeof data.scenes[n] == "undefined") {
+		console.log("Scene "+n+": Not found");
+	} else {
+		console.log("Scene "+n+": Loaded");
+		
+		currentFrame = data.scenes[n];
+		loadImageFrame(currentFrame);
+		loadSoundFrame(currentFrame);
+		interval = setInterval(tick,200);
+	}
 }
 
 
@@ -239,170 +397,6 @@ function checkEvent(n) {
 	}
 	
 	return true;
-}
-
-
-function loadSoundFrame(n) {
-	var frame = data.soundFrames[n];
-	
-	if (typeof frame == "undefined") {
-		return;
-	}
-	
-	console.log("Frame "+n+": Playing sound "+frame[0]);
-	
-	if (typeof frame[1] == "undefined") {
-		createjs.Sound.play(frame[0], createjs.Sound.INTERRUPT_ANY);
-	} else { // Looped
-		if (frame[0] == 'Sr-twkl2') { // Offset to avoid popping noise
-			var sound = createjs.Sound.play(frame[0], createjs.Sound.INTERRUPT_ANY, 4, 4, -1);
-		} else {
-			var sound = createjs.Sound.play(frame[0], createjs.Sound.INTERRUPT_ANY, 0, 0, -1);
-		}
-		
-		var duration = frame[1] - n;
-		soundTimeout = setTimeout(function() {
-			console.log( "Frame "+frame[1]+": " + ( sound.stop() ? "Stopped sound" : "Did not stop sound" ) + " " + frame[0] );
-		}, duration * 200);
-		
-		console.log("Frame "+n+": Looping sound for "+duration+" frames");
-	}
-}
-
-
-function loadImageFrame(n) {
-	if ( checkEvent(n-1) ) {
-		return;
-	}
-	
-	var frame = data.imageFrames[n-1];
-	
-	$(".channel").removeClass("updated");
-	
-	$.each(frame, function(channel, sprite) {
-		var image = data.images[sprite[0]];
-		
-		if ( $("#channel-"+channel).length == 0 ) {
-			$("#stage").append($("<div id='channel-"+channel+"' class='channel' style='z-index: "+channel+";'></div>"));
-		} else {
-			$("#channel-"+channel)
-				.off("click");
-		}
-		
-		if (typeof image == 'undefined') {
-			switch(sprite[0]) {
-				case 288: // Quit button
-					$("#channel-"+channel)
-						.css({
-							"background-image": "none",
-							"left": sprite[1],
-							"top": sprite[2],
-							"width": 52,
-							"height": 22
-						})
-						.addClass("updated")
-						.show()
-						.on("click",function(){
-							loadScene("end1A");
-						});
-					break;
-				case 289: // Basket button? (found in start0, end1 and hello2)
-					break;
-				case 290: // Open button
-					$("#channel-"+channel)
-						.css({
-							"background-image": "none",
-							"left": sprite[1],
-							"top": sprite[2],
-							"width": 52,
-							"height": 22
-						})
-						.addClass("updated")
-						.show()
-						.on("click",function(){
-							loadScene("end1B");
-						});
-					break;
-				case 291: // Black background
-					break;
-				default:
-					console.log("Frame "+n+": Could not find cast member "+sprite[0]);
-			}
-		} else {
-			switch (sprite[0]) {
-				case 12: // Basket top
-					$("#channel-"+channel)
-						.on("click",function(){
-							loadScene("hello1");
-						});
-					break;
-				case 14: // Basket full
-					$("#channel-"+channel)
-						.on("click",function(){
-							loadScene("s"+Math.floor((Math.random()*3)+1));
-						});
-					break;
-					break;
-				case 18: // Bowl
-				case 19:
-					$("#channel-"+channel)
-						.on("click",function(){
-							if ( currentFrame >= data.scenes.sitA && currentFrame < data.scenes.sB2A || currentFrame >= data.scenes.sleepA && currentFrame < data.scenes.akubi ) {
-								loadScene("food1");
-							} else if ( currentFrame >= data.scenes.sitB && currentFrame < data.scenes.sitC ) {
-								loadScene("food2");
-							} else if ( currentFrame >= data.scenes.sitC && currentFrame < data.scenes.walkA ) {
-								loadScene("food3");
-							}
-						});
-					break;
-				case 118: // Sleeping hamster
-					$("#channel-"+channel)
-						.on("click",function(){
-							if (getRandMatch(15)) {
-								loadScene("gloomA");
-							} else {
-								loadScene("akubi");
-							}
-						});
-					break;
-			}
-			
-			$("#channel-"+channel)
-				.css({
-					"background-image": "url('images/member_"+sprite[0]+".png')",
-					"left": sprite[1],
-					"top": sprite[2],
-					"width": image[0],
-					"height": image[1]
-				})
-				.addClass("updated")
-				.show();
-		}
-	});
-	
-	$(".channel:not(.updated)")
-		.hide();
-	
-//	console.log("Frame "+n+": Loaded");
-}
-
-
-function loadScene(n) {
-	clearInterval(interval);
-	clearTimeout(soundTimeout);
-	createjs.Sound.stop();
-	
-	if (typeof data.scenes[n] == "undefined") {
-		console.log("Scene "+n+": Not found");
-	} else {
-		console.log("Scene "+n+": Loaded");
-		
-		currentFrame = data.scenes[n];
-		loadImageFrame(currentFrame);
-		loadSoundFrame(currentFrame);
-		interval = setInterval(tick,200);
-	}
 }
 
 
