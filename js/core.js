@@ -1,5 +1,6 @@
 var interval;
 var soundTimeout;
+var msecsPerFrame = 200;
 
 
 function getRand(n) {
@@ -34,18 +35,18 @@ function loadSoundFrame(n) {
 	console.log("Frame "+n+": Playing sound "+frame[0]);
 	
 	if (typeof frame[1] == "undefined") {
-		createjs.Sound.play(frame[0], createjs.Sound.INTERRUPT_ANY);
-	} else { // Looped
 		if (frame[0] == 'Sr-twkl2') { // Offset to avoid popping noise
-			var sound = createjs.Sound.play(frame[0], createjs.Sound.INTERRUPT_ANY, 4, 4, -1);
+			createjs.Sound.play(frame[0], createjs.Sound.INTERRUPT_ANY, 4, 4);
 		} else {
-			var sound = createjs.Sound.play(frame[0], createjs.Sound.INTERRUPT_ANY, 0, 0, -1);
+			createjs.Sound.play(frame[0], createjs.Sound.INTERRUPT_ANY);
 		}
+	} else { // Looped
+		var sound = createjs.Sound.play(frame[0], createjs.Sound.INTERRUPT_ANY, 0, 0, -1);
 		
 		var duration = frame[1] - n;
 		soundTimeout = setTimeout(function() {
 			console.log( "Frame "+frame[1]+": " + ( sound.stop() ? "Stopped sound" : "Did not stop sound" ) + " " + frame[0] );
-		}, duration * 200);
+		}, duration * msecsPerFrame);
 		
 		console.log("Frame "+n+": Looping sound for "+duration+" frames");
 	}
@@ -177,7 +178,7 @@ function loadScene(n) {
 		currentFrame = data.scenes[n];
 		loadImageFrame(currentFrame);
 		loadSoundFrame(currentFrame);
-		interval = setInterval(tick,200);
+		interval = setInterval(tick,msecsPerFrame);
 	}
 }
 
