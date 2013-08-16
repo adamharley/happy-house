@@ -63,14 +63,14 @@ function loadImageFrame(n) {
 	$(".channel").hide();
 	
 	$.each(frame, function(channel,sprite) {
-		loadImage(channel,sprite);
+		loadImage(n,channel,sprite);
 	});
 	
 //	console.log("Frame "+n+": Loaded");
 }
 
 
-function loadImage(channel,sprite) {
+function loadImage(n,channel,sprite) {
 	var imageName = sprite[0];
 	var image = data.images[imageName];
 	
