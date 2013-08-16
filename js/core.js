@@ -62,106 +62,239 @@ function loadImageFrame(n) {
 	
 	$(".channel").hide();
 	
-	$.each(frame, function(channel, sprite) {
-		var imageName = sprite[0];
-		var image = data.images[imageName];
-		
-		if ( $("#channel-"+channel).length == 0 ) {
-			$("#stage").append($("<div id='channel-"+channel+"' class='channel' style='z-index: "+channel+";'></div>"));
-		} else {
-			$("#channel-"+channel)
-				.off("click");
-		}
-		
-		if (typeof image == 'undefined') {
-			switch(imageName) {
-				case 288: // Quit button
-					$("#channel-"+channel)
-						.css({
-							"background-image": "none",
-							"left": sprite[1],
-							"top": sprite[2],
-							"width": 52,
-							"height": 22
-						})
-						.show()
-						.on("click",function(){
-							loadScene("end1A");
-						});
-					break;
-				case 289: // Basket button? (found in start0, end1 and hello2)
-					break;
-				case 290: // Open button
-					$("#channel-"+channel)
-						.css({
-							"background-image": "none",
-							"left": sprite[1],
-							"top": sprite[2],
-							"width": 52,
-							"height": 22
-						})
-						.show()
-						.on("click",function(){
-							loadScene("end1B");
-						});
-					break;
-				case 291: // Black background
-					break;
-				default:
-					console.log("Frame "+n+": Could not find cast member "+imageName);
-			}
-		} else {
-			switch (imageName) {
-				case 12: // Basket top
-					$("#channel-"+channel)
-						.on("click",function(){
-							loadScene("hello1");
-						});
-					break;
-				case 14: // Basket full
-					$("#channel-"+channel)
-						.on("click",function(){
-							loadScene("s"+getRand(3));
-						});
-					break;
-				case 18: // Bowl
-				case 19:
-					$("#channel-"+channel)
-						.on("click",function(){
-							if ( currentFrame >= data.scenes.sitA && currentFrame < data.scenes.sB2A || currentFrame >= data.scenes.sleepA && currentFrame < data.scenes.akubi ) {
-								loadScene("food1");
-							} else if ( currentFrame >= data.scenes.sitB && currentFrame < data.scenes.sitC ) {
-								loadScene("food2");
-							} else if ( currentFrame >= data.scenes.sitC && currentFrame < data.scenes.walkA ) {
-								loadScene("food3");
-							}
-						});
-					break;
-				case 118: // Sleeping hamster
-					$("#channel-"+channel)
-						.on("click",function(){
-							if (getRandMatch(15)) {
-								loadScene("gloomA");
-							} else {
-								loadScene("akubi");
-							}
-						});
-					break;
-			}
-			
-			$("#channel-"+channel)
-				.css({
-					"background-image": "url('images/member_"+imageName+".png')",
-					"left": sprite[1],
-					"top": sprite[2],
-					"width": image[0],
-					"height": image[1]
-				})
-				.show();
-		}
+	$.each(frame, function(channel,sprite) {
+		loadImage(channel,sprite);
 	});
 	
 //	console.log("Frame "+n+": Loaded");
+}
+
+
+function loadImage(channel,sprite) {
+	var imageName = sprite[0];
+	var image = data.images[imageName];
+	
+	if ( $("#channel-"+channel).length == 0 ) {
+		$("#stage").append($("<div id='channel-"+channel+"' class='channel' style='z-index: "+channel+";'></div>"));
+	} else {
+		$("#channel-"+channel)
+			.off("click");
+	}
+	
+	if (typeof image == 'undefined') {
+		switch(imageName) {
+			case 288: // Quit button
+				$("#channel-"+channel)
+					.css({
+						"background-image": "none",
+						"left": sprite[1],
+						"top": sprite[2],
+						"width": 52,
+						"height": 22
+					})
+					.show()
+					.on("click",function(){
+						loadScene("end1A");
+					});
+				break;
+			case 289: // Basket button? (found in start0, end1 and hello2)
+				break;
+			case 290: // Open button
+				$("#channel-"+channel)
+					.css({
+						"background-image": "none",
+						"left": sprite[1],
+						"top": sprite[2],
+						"width": 52,
+						"height": 22
+					})
+					.show()
+					.on("click",function(){
+						loadScene("end1B");
+					});
+				break;
+			case 291: // Black background
+				break;
+			default:
+				console.log("Frame "+n+": Could not find cast member "+imageName);
+		}
+	} else {
+		switch (imageName) {
+			case 12: // Basket top
+				$("#channel-"+channel)
+					.on("click",function(){
+						loadScene("hello1");
+					});
+				break;
+			case 14: // Basket full
+				$("#channel-"+channel)
+					.on("click",function(){
+						loadScene("s"+getRand(3));
+					});
+				break;
+			case 18: // Bowl
+			case 19:
+				$("#channel-"+channel)
+					.on("click",function(){
+						if ( currentFrame >= data.scenes.sitA && currentFrame < data.scenes.sB2A || currentFrame >= data.scenes.sleepA && currentFrame < data.scenes.akubi ) {
+							loadScene("food1");
+						} else if ( currentFrame >= data.scenes.sitB && currentFrame < data.scenes.sitC ) {
+							loadScene("food2");
+						} else if ( currentFrame >= data.scenes.sitC && currentFrame < data.scenes.walkA ) {
+							loadScene("food3");
+						}
+					});
+				break;
+			case 46: // Walking left hamster
+			case 47:
+			case 48:
+			case 49:
+				$("#channel-"+channel)
+					.on("click",function(){
+						clearInterval(interval);
+						setTimeout(
+							function(){ sprite[0] = 1; loadImage(channel,sprite); },
+							200
+						);
+						setTimeout(
+							function(){ sprite[0] = 2; loadImage(channel,sprite); },
+							400
+						);
+						setTimeout(
+							function(){ sprite[0] = 3; loadImage(channel,sprite); },
+							600
+						);
+						setTimeout(
+							function(){ sprite[0] = 4; loadImage(channel,sprite); },
+							800
+						);
+						setTimeout(
+							function(){ sprite[0] = 3; loadImage(channel,sprite); },
+							1000
+						);
+						setTimeout(
+							function(){ sprite[0] = 4; loadImage(channel,sprite); },
+							1200
+						);
+						setTimeout(
+							function(){ sprite[0] = 3; loadImage(channel,sprite); },
+							1400
+						);
+						setTimeout(
+							function(){ sprite[0] = 5; loadImage(channel,sprite); },
+							1600
+						);
+						setTimeout(
+							function(){ interval = setInterval(tick,msecsPerFrame); },
+							1800
+						);
+					});
+				break;
+			case 61: // Walking right hamster
+			case 62:
+			case 63:
+			case 64:
+				$("#channel-"+channel)
+					.on("click",function(){
+						clearInterval(interval);
+						setTimeout(
+							function(){ sprite[0] = 6; loadImage(channel,sprite); },
+							200
+						);
+						setTimeout(
+							function(){ sprite[0] = 7; loadImage(channel,sprite); },
+							400
+						);
+						setTimeout(
+							function(){ sprite[0] = 8; loadImage(channel,sprite); },
+							600
+						);
+						setTimeout(
+							function(){ sprite[0] = 9; loadImage(channel,sprite); },
+							800
+						);
+						setTimeout(
+							function(){ sprite[0] = 8; loadImage(channel,sprite); },
+							1000
+						);
+						setTimeout(
+							function(){ sprite[0] = 9; loadImage(channel,sprite); },
+							1200
+						);
+						setTimeout(
+							function(){ sprite[0] = 8; loadImage(channel,sprite); },
+							1400
+						);
+						setTimeout(
+							function(){ sprite[0] = 10; loadImage(channel,sprite); },
+							1600
+						);
+						setTimeout(
+							function(){ interval = setInterval(tick,msecsPerFrame); },
+							1800
+						);
+					});
+				break;
+			case 77: // SitA hamster
+			case 78:
+				$("#channel-"+channel)
+					.on("click",function(){
+						var rand = getRand(5);
+						
+						if (rand <= 2) {
+							loadScene("sitA2B");
+						} else if (rand <= 4) {
+							loadScene("sitC");
+						} else {
+							loadScene("go");
+						}
+					});
+				break;
+			case 90: // SitB hamster
+			case 91:
+				$("#channel-"+channel)
+					.on("click",function(){
+						if (getRandMatch(5)) {
+							loadScene("sitB2A");
+						} else {
+							var rand = getRand(4);
+							loadScene( (rand == 4) ? "lunch" : "lunch"+getRand(3) );
+						}
+					});
+				break;
+			case 116: // SitC hamster
+			case 117:
+				$("#channel-"+channel)
+					.on("click",function(){
+						if (getRandMatch(5)) {
+							loadScene("sleepA");
+						} else {
+							loadScene("go");
+						}
+					});
+				break;
+			case 118: // Sleeping hamster
+				$("#channel-"+channel)
+					.on("click",function(){
+						if (getRandMatch(15)) {
+							loadScene("gloomA");
+						} else {
+							loadScene("akubi");
+						}
+					});
+				break;
+		}
+		
+		$("#channel-"+channel)
+			.css({
+				"background-image": "url('images/member_"+imageName+".png')",
+				"left": sprite[1],
+				"top": sprite[2],
+				"width": image[0],
+				"height": image[1]
+			})
+			.show();
+	}
 }
 
 
@@ -255,7 +388,8 @@ function checkEvent(n) {
 		case 220: // sitB
 			switch (getRand(15)) {
 				case 5:
-					loadScene("lunch"+getRand(3));
+					var rand = getRand(4);
+					loadScene( (rand == 4) ? "lunch" : "lunch"+getRand(3) );
 					break;
 				case 10:
 					loadScene("sB2A");
@@ -440,5 +574,6 @@ $(document).ready(function() {
 	
 	
 	/* Load first scene */
-	loadScene("start0");
+//	loadScene("start0");
+	loadScene("w-1");
 });
