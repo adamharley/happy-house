@@ -1,6 +1,6 @@
 var interval;
 var soundTimeout;
-var msecsPerFrame = 200;
+var framesPerSecond = 5;
 
 
 function getRand(n) {
@@ -18,9 +18,15 @@ function tick() {
 		currentFrame = 0;
 	}
 	
-	currentFrame += 1;
-	loadImageFrame(currentFrame);
-	loadSoundFrame(currentFrame);
+	currentFrame++;
+	
+	checkFPS(currentFrame);
+	
+	if (!checkEvent(currentFrame - 1)) {
+		loadImageFrame(currentFrame);
+		loadSoundFrame(currentFrame);
+	}
+	
 	$("#frame-counter").html(currentFrame)
 }
 
@@ -46,7 +52,7 @@ function loadSoundFrame(n) {
 		var duration = frame[1] - n;
 		soundTimeout = setTimeout(function() {
 			console.log( "Frame "+frame[1]+": " + ( sound.stop() ? "Stopped sound" : "Did not stop sound" ) + " " + frame[0] );
-		}, duration * msecsPerFrame);
+		}, duration * (1000 / framesPerSecond));
 		
 		console.log("Frame "+n+": Looping sound for "+duration+" frames");
 	}
@@ -54,10 +60,6 @@ function loadSoundFrame(n) {
 
 
 function loadImageFrame(n) {
-	if ( checkEvent(n-1) ) {
-		return;
-	}
-	
 	var frame = data.imageFrames[n-1];
 	
 	$(".channel").hide();
@@ -70,7 +72,7 @@ function loadImageFrame(n) {
 }
 
 
-function loadImage(n,channel,sprite) {
+function loadImage(n, channel, sprite) {
 	var imageName = sprite[0];
 	var image = data.images[imageName];
 	
@@ -152,41 +154,24 @@ function loadImage(n,channel,sprite) {
 				$("#channel-"+channel)
 					.on("click",function(){
 						clearInterval(interval);
+						
+						var sequence = [1,2,3,4,3,4,3,5];
+						
+						$.each(sequence, function(i, image) {
+							setTimeout(
+								function() {
+									sprite[0] = image;
+									loadImage(n, channel, sprite);
+								},
+								200 * (i + 1)
+							);
+						});
+						
 						setTimeout(
-							function(){ sprite[0] = 1; loadImage(channel,sprite); },
-							200
-						);
-						setTimeout(
-							function(){ sprite[0] = 2; loadImage(channel,sprite); },
-							400
-						);
-						setTimeout(
-							function(){ sprite[0] = 3; loadImage(channel,sprite); },
-							600
-						);
-						setTimeout(
-							function(){ sprite[0] = 4; loadImage(channel,sprite); },
-							800
-						);
-						setTimeout(
-							function(){ sprite[0] = 3; loadImage(channel,sprite); },
-							1000
-						);
-						setTimeout(
-							function(){ sprite[0] = 4; loadImage(channel,sprite); },
-							1200
-						);
-						setTimeout(
-							function(){ sprite[0] = 3; loadImage(channel,sprite); },
-							1400
-						);
-						setTimeout(
-							function(){ sprite[0] = 5; loadImage(channel,sprite); },
-							1600
-						);
-						setTimeout(
-							function(){ interval = setInterval(tick,msecsPerFrame); },
-							1800
+							function() { 
+								interval = setInterval(tick, 1000 / framesPerSecond);
+							},
+							200 * (sequence.length + 1)
 						);
 					});
 				break;
@@ -197,41 +182,24 @@ function loadImage(n,channel,sprite) {
 				$("#channel-"+channel)
 					.on("click",function(){
 						clearInterval(interval);
+						
+						var sequence = [6,7,8,9,8,9,8,10];
+						
+						$.each(sequence, function(i, image) {
+							setTimeout(
+								function() {
+									sprite[0] = image;
+									loadImage(n, channel, sprite);
+								},
+								200 * (i + 1)
+							);
+						});
+						
 						setTimeout(
-							function(){ sprite[0] = 6; loadImage(channel,sprite); },
-							200
-						);
-						setTimeout(
-							function(){ sprite[0] = 7; loadImage(channel,sprite); },
-							400
-						);
-						setTimeout(
-							function(){ sprite[0] = 8; loadImage(channel,sprite); },
-							600
-						);
-						setTimeout(
-							function(){ sprite[0] = 9; loadImage(channel,sprite); },
-							800
-						);
-						setTimeout(
-							function(){ sprite[0] = 8; loadImage(channel,sprite); },
-							1000
-						);
-						setTimeout(
-							function(){ sprite[0] = 9; loadImage(channel,sprite); },
-							1200
-						);
-						setTimeout(
-							function(){ sprite[0] = 8; loadImage(channel,sprite); },
-							1400
-						);
-						setTimeout(
-							function(){ sprite[0] = 10; loadImage(channel,sprite); },
-							1600
-						);
-						setTimeout(
-							function(){ interval = setInterval(tick,msecsPerFrame); },
-							1800
+							function() { 
+								interval = setInterval(tick, 1000 / framesPerSecond);
+							},
+							200 * (sequence.length + 1)
 						);
 					});
 				break;
@@ -242,7 +210,7 @@ function loadImage(n,channel,sprite) {
 						var rand = getRand(5);
 						
 						if (rand <= 2) {
-							loadScene("sitA2B");
+							loadScene("sA2B");
 						} else if (rand <= 4) {
 							loadScene("sitC");
 						} else {
@@ -255,7 +223,7 @@ function loadImage(n,channel,sprite) {
 				$("#channel-"+channel)
 					.on("click",function(){
 						if (getRandMatch(5)) {
-							loadScene("sitB2A");
+							loadScene("sB2A");
 						} else {
 							var rand = getRand(4);
 							loadScene( (rand == 4) ? "lunch" : "lunch"+getRand(3) );
@@ -311,7 +279,7 @@ function loadScene(n) {
 		currentFrame = data.scenes[n];
 		loadImageFrame(currentFrame);
 		loadSoundFrame(currentFrame);
-		interval = setInterval(tick,msecsPerFrame);
+		interval = setInterval(tick, 1000 / framesPerSecond);
 	}
 }
 
@@ -533,6 +501,34 @@ function checkEvent(n) {
 	
 	return true;
 }
+    
+function checkFPS(n) {
+	switch (n) {
+		case 25: // open sequence
+		case 54:
+		case 83:
+			framesPerSecond = 30;
+			
+			clearInterval(interval);
+			interval = setInterval(tick, 1000 / framesPerSecond);
+			break;
+		case 1056: // run sequence
+			framesPerSecond = 15;
+			
+			clearInterval(interval);
+			interval = setInterval(tick, 1000 / framesPerSecond);
+			break;
+		case 44: // sequence end
+		case 73:
+		case 102:
+		case 1068:
+			framesPerSecond = 5;
+			
+			clearInterval(interval);
+			interval = setInterval(tick, 1000 / framesPerSecond);
+			break;
+	}
+}
 
 
 $(document).ready(function() {
@@ -574,6 +570,5 @@ $(document).ready(function() {
 	
 	
 	/* Load first scene */
-//	loadScene("start0");
-	loadScene("w-1");
+	loadScene("start0");
 });
