@@ -14,6 +14,9 @@ foreach ( $data as $line ) {
 	if ( '430' == $sound || 'B' == $sound )
 		continue;
 	
+	if ( 'Sr-twkl2' == $sound ) // Doesn't actually loop anyway and needs special handling
+		$loop = false;
+	
 	$r[ $start ] = $loop ? array( $sound, $end ) : array( $sound );
 	$sounds[ $sound ] = $sound;
 }
