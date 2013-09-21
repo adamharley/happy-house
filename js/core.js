@@ -547,25 +547,39 @@ $(document).ready(function() {
 		$("#debug").show();
 	};
 	
+	if (window.location.hash == '#app') {
+		$(".container-fluid > *").hide();
+		$("body").css("background-color","#000");
+		$("#stage")
+			.show()
+			.css({
+				"box-shadow": "none",
+				"margin-top": "-77.5px"
+			})
+	};
 	
 	/* Mute control */
 	$("#mute-toggle").click(function(){
 		createjs.Sound.setMute(!createjs.Sound.getMute());
 	});
 	
+	createjs.Sound.setMute(true);
+	
 	
 	/* Preload */
-	var queue = new createjs.LoadQueue();
-	queue.installPlugin(createjs.Sound);
+	var imageQueue = new createjs.LoadQueue(true, "images/");
 	
 	$.each(data.images, function(key){
-		if (jQuery.inArray(key,[50,60,65,76,79,87,110,115,120,127,132,142,149,181,206,207,208,209,210,216,217]) !== -1) {
-			queue.loadFile({src:"images/member_"+key+".png"});
+		if (-1 === $.inArray(parseInt(key), [50,60,65,76,79,87,110,115,120,127,132,142,149,181,206,207,208,209,210,216,217])) {
+			imageQueue.loadFile({src:"member_"+key+".png"});
 		}
 	});
 	
+	var soundQueue = new createjs.LoadQueue(true, "sounds/");
+	soundQueue.installPlugin(createjs.Sound);
+	
 	$.each(data.sounds, function(key,value){
-		queue.loadFile({"id":value, "src":"sounds/"+value+".wav"});
+		soundQueue.loadFile({"src":value+".wav"});
 	});
 	
 	
