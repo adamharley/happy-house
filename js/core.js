@@ -547,6 +547,12 @@ $(document).ready(function() {
 		$("#debug").show();
 	};
 	
+	if (window.location.hash == '#simple' || window.navigator.standalone) {
+		$(".container-fluid > *:not(#stage)").hide();
+		$("#stage").css("box-shadow","none");
+		$("#stage").css("margin-top","-77.5px");
+		$("body").css("background","#000");
+	};
 	
 	/* Mute control */
 	$("#mute-toggle").click(function(){
