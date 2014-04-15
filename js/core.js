@@ -547,6 +547,7 @@ $(document).ready(function() {
 		$("#debug").show();
 	};
 	
+	/* Simple / iOS display */
 	if (window.location.hash == '#simple' || window.navigator.standalone) {
 		$(".container-fluid > *:not(#stage)").hide();
 		$("#stage").css("box-shadow","none");
