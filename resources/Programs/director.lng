@@ -1,0 +1,71 @@
+on getCast
+  buffer = "{"
+  
+  repeat with n = 1 to castLib("Internal").member.count 
+    castMem = castLib("Internal").member[n]
+    if (castMem.type = #bitmap) then
+      buffer = buffer & QUOTE & castMem.number & QUOTE & ":[" & castMem.width & "," & castMem.height & "],"
+    end if
+  end repeat 
+  
+  buffer = buffer & "}"
+  put(buffer)
+end
+
+
+on getStages
+  buffer = "{"
+  
+  repeat with n = 1 to _movie.lastFrame
+    _movie.go(n)
+    if (_movie.frameLabel <> 0) then
+      buffer = buffer & QUOTE & _movie.frameLabel & QUOTE & ":" & _movie.frame & ","
+    end if
+  end repeat
+  
+  buffer = buffer & "}"
+  put(buffer)
+end
+
+
+on getScore
+  timeout = 60000
+  buffer = "[{"
+  c = 1
+  f = 1
+  
+  _movie.go(f)
+  put("Frame"&&f)
+  
+  startTime = _system.milliseconds
+  
+  repeat while startTime + timeout > _system.milliseconds
+    if (c = _movie.lastChannel + 1) then
+      -- frame hop
+      c = 1
+      buffer = buffer & "},"
+      
+      if (f = _movie.lastFrame) then
+        put("Exiting")
+        exit repeat
+      else
+        buffer = buffer & "{"
+        f = f + 1
+        _movie.go(f)
+        put("Frame"&&f)
+      end if
+    end if
+    
+    chan = channel(c)
+    currSprite = chan.sprite
+    
+    if (currSprite.member.number <> 0) then
+      buffer = buffer & QUOTE & c & QUOTE & ":[" & currSprite.member.number & "," & currSprite.left & "," & currSprite.top & "],"
+    end if
+    
+    c = c + 1
+  end repeat
+  
+  buffer = buffer & "]"
+  put(buffer) 
+end

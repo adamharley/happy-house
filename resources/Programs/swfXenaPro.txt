@@ -1,0 +1,111 @@
+        
+            Swifty Xena Pro 1.4
+               Burak KALAYCI
+               January 2000
+
+
+Requirements:
+-------------
+- Windows 9x (Should work on NT but not tested!)
+- Types.ini file should be located in the same folder!
+
+
+What can Xena do for you?
+-------------------------
+Swifty Xena can,
+- Extract uncompressed SWF files from executables, 
+  including 16 and 32 bit projectors, flash3.exe, flash.exe
+  or flash3.dl_ for trial version, Aftershock.exe
+  and Director movies.
+- Replace the SWF file in the executable or movie with another SWF
+- Extract DIR and CST files embedded in Director projectors using 
+  a special built-in function. [DIR file header is written to EXE 
+  file start on extraction, (the DIR file is not relocated by Xena) 
+  so you get a very fat DIR file! If you can remove the protection, 
+  extracted files can be compacted by Director. You can open the
+  file as a MIAW] {Xena does not really extract the DXR, it copies
+  the EXE file and then writes the necessary header to that file so
+  Director (or other apps) can read the file as a DXR file.}
+
+Notes:
+------
+-Extracted files will be saved in EXE files directory.
+-A backup file with the appended extension BAK will be
+ created (in the same directory again) on replace operations.
+-Both the backup file and SWF will be overwritten if 
+ they exist.
+-Replacement can only be done if the new SWF filesize is
+ smaller or equal to the old SWF filesize.
+-Swifty Xena Pro reads file definitions from file "types.ini",
+ that means it can be extended easily for simple file types.
+-This version will not extract SWF files version 5 and above.
+ (with the supplied "types.ini" file)
+-The version that is displayed is as read from the types.ini
+ file. DIR/DXR format (at least the header) is not changed
+ for D7 and, so,  D6 files are also displayed as version 7.
+-The filesizes displayed for DIR/CST files are not the
+ actual filesize. They're true sizes for the DIR/CST file.
+ Extracted filesize always equals the projector EXE size.
+-Doubleclicking a DIR/CST file runs the file with Director.
+ Since DIR/CST files are protected, Director will complain
+ about this and won't open the file.
+
+Keep in mind:
+-------------
+-Test the extracted SWFs by doubleclicking on them in
+ the extracted files list. Xena might get wrong sometimes.
+-Original EXE file might check for integrity and etc so
+ replaced EXEs doesn't (and shouldn't) work all the time.
+ (though haven't seen one yet)
+
+
+Trouble shooting:
+-----------------
+-if you get Access denied error, check if the file is 
+ readonly. (On NT check Access rights for the file)
+-if you get error 32, check if the EXE file is running.
+ Exit the application before replacing any SWFs in it.
+-Check if you have enough free space on your disk.
+
+Disclaimer:
+-----------
+This software is provided as is. Use at your own risk. 
+If you break any license agreement by using this software,
+YOU will be responsible for your actions.
+
+Copyright:
+----------
+All rights reserved. Copyright ©1998-2000 Burak KALAYCI 
+e-mail: burakk@buraks.com
+Homepage: http://www.buraks.com/swifty
+
+
+License Terms:
+--------------
+Swifty Xena Pro is freeware. Use at your own risk! You can not
+distribute Swifty Xena withour prior authorization from the author.
+
+
+Other notes:
+------------
+-Following has been tested with Xena;
+ . Misc. 16 bit and 32 bit flash 3 and 4 projectors 
+ . Misc 32 bit Director projectors (v6, v6.5, v7 and v7.02)
+ . Flash3.exe and flash.exe (Flash 4) (you can replace 
+   the splash SWF and others but i do not know if this 
+   would be legal and strongly advice you not doing it.)
+ . if you're using flash3 trial version then open flash3.dl_
+   in the same directory as flash3.exe instead of flash3.exe
+ . Aftershock.exe (Make sure you see the easter egg bunny!)
+ . Macromedias VB and VC++ sample applications
+ . Misc. Director movies
+ . Several EXE files, which don't have a SWF in them
+
+What's new
+----------
+v1.4 January 2000
+ -Checks for PIII serial number on startup and warns the user
+v1.3 Septemper 1999 
+ -Director projector support added
+
+End of document (Doc version 1.4 Pro)
