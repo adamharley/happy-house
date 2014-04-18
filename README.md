@@ -1,6 +1,6 @@
 Happy House
 ===========
-	<p>Happy House is the creation of <a href="http://web.archive.org/web/20070611110628/http://www.eggegg.co.jp/~tango/tyhp/halmis_work/halmi.html" target="_blank">Halmi Arai</a>, dedicated to the memory of her beloved hamster Ruby Springfield.</p>
+<p>Happy House is the creation of <a href="http://web.archive.org/web/20070611110628/http://www.eggegg.co.jp/~tango/tyhp/halmis_work/halmi.html" target="_blank">Halmi Arai</a>, dedicated to the memory of her beloved hamster Ruby Springfield.</p>
 <p>It was originally made in <a href="https://en.wikipedia.org/wiki/Adobe_Director" target="_blank">Macromedia Director 7</a> for Windows 95 and Mac OS.</p>
 <p>As it can't be run under a modern OS, I decided to decompile it and recreate Happy House using HTML, CSS and jQuery.</p>
 <p>What you see here is as close as I could get, using the original frame data but estimated probabilities for changes in behaviour.</p>
