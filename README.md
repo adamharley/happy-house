@@ -5,7 +5,7 @@ Happy House
 <p>As it can't be run under a modern OS, I decided to decompile it and recreate Happy House using HTML, CSS and jQuery.</p>
 <p>What you see here is as close as I could get, using the original frame data but estimated probabilities for changes in behaviour.</p>
 <p><strong>What does it do?</strong></p>
-<blockquote>In the words of lifelong hamster lover M. Yoshida, "people who like hamsters will know what to expect". In other words, Happy House doesn't do much.<br />&ndash;<small><a href="http://www.maniform.com/stuff/hamster.htm" target="_blank">Maniform Creative Services</a></small></blockquote>
+<blockquote>In the words of lifelong hamster lover M. Yoshida, "people who like hamsters will know what to expect". In other words, Happy House doesn't do much.<br />&ndash; <a href="http://www.maniform.com/stuff/hamster.htm" target="_blank">Maniform Creative Services</a></blockquote>
 <p>You can...</p>
 <ul>
 <li>Open/close the basket</li>
