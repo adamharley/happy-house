@@ -22,5 +22,4 @@ Happy House
 <li>Script assets cannot be recovered as they're compiled</li>
 <li>The Score can be extracted using Lingo</li>
 <li>This version of Happy House stores the frames in a JSON array and iterates over them using JavaScript substitutes for the original scene scripts</li>
-<li>The source code for this version can be found <a href="https://github.com/adamharley/happy-house" target="_blank">here</a></li>
 </ul>
