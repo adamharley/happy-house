@@ -2,6 +2,14 @@ var interval;
 var soundTimeout;
 var framesPerSecond = 5;
 
+var scriptUrl = (function(){ 
+	var scripts = document.getElementsByTagName('script'), 
+		script = scripts[scripts.length - 1];
+	return script.getAttribute('src', 2);
+}()); 
+var scriptPath = scriptUrl.substring(0, scriptUrl.lastIndexOf('/'));
+var basePath = scriptPath.substring(0, scriptPath.lastIndexOf('/'));
+
 
 function getRand(n) {
 	return Math.floor((Math.random()*n)+1);
@@ -269,7 +277,7 @@ function loadImage(n, channel, sprite) {
 		
 		$("#channel-"+channel)
 			.css({
-				"background-image": "url('images/member_"+imageName+".png')",
+				"background-image": "url('"+ basePath +"/images/member_"+imageName+".png')",
 				"left": sprite[1],
 				"top": sprite[2],
 				"width": image[0],
@@ -581,12 +589,12 @@ $(document).ready(function() {
 	
 	$.each(data.images, function(key){
 		if (jQuery.inArray(key,[50,60,65,76,79,87,110,115,120,127,132,142,149,181,206,207,208,209,210,216,217]) !== -1) {
-			queue.loadFile({src:"images/member_"+key+".png"});
+			queue.loadFile({src:basePath+"/images/member_"+key+".png"});
 		}
 	});
 	
 	$.each(data.sounds, function(key,value){
-		queue.loadFile({"id":value, "src":"sounds/"+value+".wav"});
+		queue.loadFile({"id":value, "src":basePath+"/sounds/"+value+".wav"});
 	});
 	
 	
