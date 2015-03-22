@@ -1,0 +1,20 @@
+{
+  "name": "Happy House",
+  "description": "",
+  "manifest_version": 2,
+  "version": "0.1",
+  "app": {
+    "background": {
+      "scripts": ["chrome.js"]
+    }
+  },
+  "icons": {
+	"16": "images/ios.png",
+	"48": "images/ios.png",
+	"128": "images/ios.png"
+  },
+  "permissions": [
+	"contextMenus",
+    "app.window.alwaysOnTop"
+  ]
+}
