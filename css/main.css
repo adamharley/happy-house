@@ -30,6 +30,10 @@
 	position: absolute;
 }
 
+.channel.clickable {
+	cursor: pointer;
+}
+
 #stage {
 	width: 272px;
 	height: 155px;
