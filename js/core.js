@@ -60,15 +60,17 @@ function loadSoundFrame(n) {
 
 
 function loadImageFrame(n) {
-	var frame = data.imageFrames[n-1];
-	
-	$(".channel").hide();
-	
-	$.each(frame, function(channel,sprite) {
-		loadImage(n,channel,sprite);
+	requestAnimationFrame(function() {
+		var frame = data.imageFrames[n-1];
+		
+		$(".channel").hide();
+		
+		$.each(frame, function(channel,sprite) {
+			loadImage(n,channel,sprite);
+		});
+		
+//		console.log("Frame "+n+": Loaded");
 	});
-	
-//	console.log("Frame "+n+": Loaded");
 }
 
 
