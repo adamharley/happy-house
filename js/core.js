@@ -80,7 +80,8 @@ function loadImage(n, channel, sprite) {
 		$("#stage").append($("<div id='channel-"+channel+"' class='channel' style='z-index: "+channel+";'></div>"));
 	} else {
 		$("#channel-"+channel)
-			.off("click");
+			.off("click")
+			.removeClass("clickable");
 	}
 	
 	if (typeof image == 'undefined') {
@@ -97,7 +98,8 @@ function loadImage(n, channel, sprite) {
 					.show()
 					.on("click",function(){
 						loadScene("end1A");
-					});
+					})
+					.addClass("clickable");
 				break;
 			case 289: // Basket button? (found in start0, end1 and hello2)
 				break;
@@ -113,7 +115,8 @@ function loadImage(n, channel, sprite) {
 					.show()
 					.on("click",function(){
 						loadScene("end1B");
-					});
+					})
+					.addClass("clickable");
 				break;
 			case 291: // Black background
 				break;
@@ -126,13 +129,15 @@ function loadImage(n, channel, sprite) {
 				$("#channel-"+channel)
 					.on("click",function(){
 						loadScene("hello1");
-					});
+					})
+					.addClass("clickable");
 				break;
 			case 14: // Basket full
 				$("#channel-"+channel)
 					.on("click",function(){
 						loadScene("s"+getRand(3));
-					});
+					})
+					.addClass("clickable");
 				break;
 			case 18: // Bowl
 			case 19:
@@ -145,7 +150,8 @@ function loadImage(n, channel, sprite) {
 						} else if ( currentFrame >= data.scenes.sitC && currentFrame < data.scenes.walkA ) {
 							loadScene("food3");
 						}
-					});
+					})
+					.addClass("clickable");
 				break;
 			case 46: // Walking left hamster
 			case 47:
@@ -173,7 +179,8 @@ function loadImage(n, channel, sprite) {
 							},
 							200 * (sequence.length + 1)
 						);
-					});
+					})
+					.addClass("clickable");
 				break;
 			case 61: // Walking right hamster
 			case 62:
@@ -201,7 +208,8 @@ function loadImage(n, channel, sprite) {
 							},
 							200 * (sequence.length + 1)
 						);
-					});
+					})
+					.addClass("clickable");
 				break;
 			case 77: // SitA hamster
 			case 78:
@@ -216,7 +224,8 @@ function loadImage(n, channel, sprite) {
 						} else {
 							loadScene("go");
 						}
-					});
+					})
+					.addClass("clickable");
 				break;
 			case 90: // SitB hamster
 			case 91:
@@ -228,7 +237,8 @@ function loadImage(n, channel, sprite) {
 							var rand = getRand(4);
 							loadScene( (rand == 4) ? "lunch" : "lunch"+getRand(3) );
 						}
-					});
+					})
+					.addClass("clickable");
 				break;
 			case 116: // SitC hamster
 			case 117:
@@ -239,7 +249,8 @@ function loadImage(n, channel, sprite) {
 						} else {
 							loadScene("go");
 						}
-					});
+					})
+					.addClass("clickable");
 				break;
 			case 118: // Sleeping hamster
 				$("#channel-"+channel)
@@ -249,7 +260,8 @@ function loadImage(n, channel, sprite) {
 						} else {
 							loadScene("akubi");
 						}
-					});
+					})
+					.addClass("clickable");
 				break;
 		}
 		

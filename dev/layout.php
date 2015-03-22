@@ -8,6 +8,7 @@ echo <<<IV
             android:id="@+id/channel$i"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scaleType="fitXY"
             android:tag="channel$i" />
 
 
